@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>格式转换 - 音频处理工具</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn nav-btn">← 返回主页</a>
+        
+        <header>
+            <h1>音频格式转换</h1>
+            <p>将您的音频转换为其他格式</p>
+        </header>
+
+        <main>
+            <section class="current-file" id="currentFileSection">
+                <h2>当前文件</h2>
+                <div class="file-info">
+                    <div class="file-details">
+                        <h3 id="currentFileName">未选择文件</h3>
+                        <p id="currentFileInfo">请先在主页上传音频文件</p>
+                    </div>
+                    <audio controls id="audioPlayer" style="width: 100%; margin-top: 15px; display: none;">
+                        您的浏览器不支持音频播放。
+                    </audio>
+                </div>
+            </section>
+
+            <section class="conversion-options" id="conversionSection" style="display: none;">
+                <h2>转换选项</h2>
+                <div class="format-grid">
+                    <div class="format-option" data-format="mp3">
+                        <div class="format-icon">🎵</div>
+                        <h3>MP3</h3>
+                        <p>最常用的音频格式，兼容性好</p>
+                        <div class="quality-options">
+                            <label>质量:</label>
+                            <select class="quality-select">
+                                <option value="128k">128 kbps</option>
+                                <option value="192k" selected>192 kbps</option>
+                                <option value="256k">256 kbps</option>
+                                <option value="320k">320 kbps</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="format-option" data-format="wav">
+                        <div class="format-icon">🎼</div>
+                        <h3>WAV</h3>
+                        <p>无损音频格式，音质最佳</p>
+                        <div class="quality-options">
+                            <label>采样率:</label>
+                            <select class="quality-select">
+                                <option value="44100">44.1 kHz</option>
+                                <option value="48000" selected>48 kHz</option>
+                                <option value="96000">96 kHz</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="format-option" data-format="flac">
+                        <div class="format-icon">💎</div>
+                        <h3>FLAC</h3>
+                        <p>无损压缩格式，文件较小</p>
+                        <div class="quality-options">
+                            <label>压缩级别:</label>
+                            <select class="quality-select">
+                                <option value="0">0 (最快)</option>
+                                <option value="5" selected>5 (平衡)</option>
+                                <option value="8">8 (最小)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="format-option" data-format="aac">
+                        <div class="format-icon">📱</div>
+                        <h3>AAC</h3>
+                        <p>高效压缩，适合移动设备</p>
+                        <div class="quality-options">
+                            <label>质量:</label>
+                            <select class="quality-select">
+                                <option value="96k">96 kbps</option>
+                                <option value="128k" selected>128 kbps</option>
+                                <option value="192k">192 kbps</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="convert-controls">
+                    <button class="btn" id="convertBtn" onclick="startConversion()" disabled>
+                        <span class="btn-text">开始转换</span>
+                        <span class="loading" style="display: none;"></span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="conversion-result" id="resultSection" style="display: none;">
+                <h2>转换结果</h2>
+                <div class="result-info">
+                    <div class="success-message">
+                        <div class="success-icon">✅</div>
+                        <h3>转换完成！</h3>
+                        <p id="resultMessage">您的音频已成功转换</p>
+                    </div>
+                    
+                    <div class="download-section">
+                        <audio controls id="resultPlayer" style="width: 100%; margin-bottom: 15px;">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                        <button class="btn" id="downloadBtn" onclick="downloadResult()">
+                            📥 下载转换后的文件
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/converter.js') }}"></script>
+</body>
+</html>

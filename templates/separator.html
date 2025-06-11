@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频分离 - 音频处理工具</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn nav-btn">← 返回主页</a>
+        
+        <header>
+            <h1>音频分离</h1>
+            <p>使用AI技术分离人声和伴奏</p>
+        </header>
+
+        <main>
+            <section class="current-file" id="currentFileSection">
+                <h2>当前文件</h2>
+                <div class="file-info">
+                    <div class="file-details">
+                        <h3 id="currentFileName">未选择文件</h3>
+                        <p id="currentFileInfo">请先在主页上传音频文件</p>
+                    </div>
+                    <audio controls id="audioPlayer" style="width: 100%; margin-top: 15px; display: none;">
+                        您的浏览器不支持音频播放。
+                    </audio>
+                </div>
+            </section>
+
+            <section class="separation-info" id="infoSection" style="display: none;">
+                <h2>分离说明</h2>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-icon">🎤</div>
+                        <h3>人声分离</h3>
+                        <p>提取音频中的人声部分，包括主唱和和声</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🎼</div>
+                        <h3>伴奏分离</h3>
+                        <p>提取音频中的伴奏部分，去除人声</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🤖</div>
+                        <h3>AI技术</h3>
+                        <p>使用Demucs深度学习模型进行高质量分离</p>
+                    </div>
+                </div>
+                
+                <div class="separation-controls">
+                    <div class="warning-message">
+                        <div class="warning-icon">⚠️</div>
+                        <p>音频分离需要较长时间处理，请耐心等待。处理时间取决于音频长度，通常需要1-5分钟。</p>
+                    </div>
+                    
+                    <button class="btn" id="separateBtn" onclick="startSeparation()">
+                        <span class="btn-text">🎵 开始分离</span>
+                        <span class="loading" style="display: none;"></span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="separation-progress" id="progressSection" style="display: none;">
+                <h2>处理进度</h2>
+                <div class="progress-info">
+                    <div class="progress-steps">
+                        <div class="step active" id="step1">
+                            <div class="step-number">1</div>
+                            <div class="step-text">准备音频</div>
+                        </div>
+                        <div class="step" id="step2">
+                            <div class="step-number">2</div>
+                            <div class="step-text">AI分析</div>
+                        </div>
+                        <div class="step" id="step3">
+                            <div class="step-number">3</div>
+                            <div class="step-text">生成结果</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-message">
+                        <p id="progressMessage">正在准备音频文件...</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="separation-result" id="resultSection" style="display: none;">
+                <h2>分离结果</h2>
+                <div class="result-info">
+                    <div class="success-message">
+                        <div class="success-icon">✅</div>
+                        <h3>分离完成！</h3>
+                        <p>音频已成功分离为人声和伴奏</p>
+                    </div>
+                    
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <h4>🎤 人声</h4>
+                            <audio controls id="vocalsPlayer" style="width: 100%; margin-bottom: 10px;">
+                                您的浏览器不支持音频播放。
+                            </audio>
+                            <button class="btn btn-secondary" id="downloadVocalsBtn" onclick="downloadVocals()">
+                                📥 下载人声
+                            </button>
+                        </div>
+                        
+                        <div class="result-item">
+                            <h4>🎼 伴奏</h4>
+                            <audio controls id="accompanimentPlayer" style="width: 100%; margin-bottom: 10px;">
+                                您的浏览器不支持音频播放。
+                            </audio>
+                            <button class="btn btn-secondary" id="downloadAccompanimentBtn" onclick="downloadAccompaniment()">
+                                📥 下载伴奏
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/separator.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频处理工具</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>音频处理工具</h1>
+            <p>支持音频上传、格式转换、剪辑和人声分离</p>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <h2>音频上传</h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="upload-icon">📁</i>
+                        <p>拖拽音频文件到此处或点击选择文件</p>
+                        <p class="file-types">支持格式: MP3, WAV, FLAC, AAC, M4A, OGG, WMA</p>
+                        <input type="file" id="fileInput" accept=".mp3,.wav,.flac,.aac,.m4a,.ogg,.wma" hidden>
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">选择文件</button>
+                    </div>
+                </div>
+                
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </section>
+
+            <section class="audio-info" id="audioInfo" style="display: none;">
+                <h3>音频信息</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>文件名:</label>
+                        <span id="fileName"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>文件大小:</label>
+                        <span id="fileSize"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>时长:</label>
+                        <span id="duration"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>采样率:</label>
+                        <span id="sampleRate"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>声道:</label>
+                        <span id="channels"></span>
+                    </div>
+                </div>
+                
+                <audio controls id="audioPlayer" style="width: 100%; margin-top: 15px;">
+                    您的浏览器不支持音频播放。
+                </audio>
+                
+                <!-- 添加删除按钮 -->
+                <div class="audio-actions" style="margin-top: 15px; text-align: center;">
+                    <button class="btn btn-danger" onclick="deleteCurrentAudio()" style="background-color: #e74c3c; color: white;">🗑️ 删除当前音频</button>
+                </div>
+            </section>
+
+            <section class="tools-section" id="toolsSection" style="display: none;">
+                <h2>音频处理工具</h2>
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="goToConverter()">
+                        <div class="tool-icon">🔄</div>
+                        <h3>格式转换</h3>
+                        <p>将音频转换为其他格式</p>
+                    </div>
+                    
+                    <div class="tool-card" onclick="goToEditor()">
+                        <div class="tool-icon">✂️</div>
+                        <h3>音频剪辑</h3>
+                        <p>可视化剪辑音频片段</p>
+                    </div>
+                    
+                    <div class="tool-card" onclick="goToSeparator()">
+                        <div class="tool-icon">🎵</div>
+                        <h3>音频分离</h3>
+                        <p>分离人声和伴奏</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

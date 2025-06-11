@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频剪辑 - 音频处理工具</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn nav-btn">← 返回主页</a>
+        
+        <header>
+            <h1>音频剪辑</h1>
+            <p>可视化剪辑您的音频文件</p>
+        </header>
+
+        <main>
+            <section class="current-file" id="currentFileSection">
+                <h2>当前文件</h2>
+                <div class="file-info">
+                    <div class="file-details">
+                        <h3 id="currentFileName">未选择文件</h3>
+                        <p id="currentFileInfo">请先在主页上传音频文件</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="audio-editor" id="editorSection" style="display: none;">
+                <h2>音频编辑器</h2>
+                
+                <div class="audio-controls">
+                    <audio controls id="audioPlayer" style="width: 100%; margin-bottom: 20px;">
+                        您的浏览器不支持音频播放。
+                    </audio>
+                </div>
+                
+                <div class="waveform-container">
+                    <canvas id="waveformCanvas" width="800" height="200"></canvas>
+                    <div class="selection-overlay" id="selectionOverlay"></div>
+                </div>
+                
+                <div class="time-controls">
+                    <div class="time-input-group">
+                        <label for="startTime">开始时间 (秒):</label>
+                        <input type="number" id="startTime" min="0" max="99999" step="0.1" value="0">
+                    </div>
+                    <div class="time-input-group">
+                        <label for="endTime">结束时间 (秒):</label>
+                        <input type="number" id="endTime" min="0" max="99999" step="0.1" value="0">
+                    </div>
+                    <div class="duration-display">
+                        <span>选中时长: <span id="selectionDuration">0.0</span> 秒</span>
+                    </div>
+                    <div class="time-input-group apply-button-group">
+                        <button class="btn btn-secondary" onclick="applyTimeInputs()">应用时间选择</button>
+                    </div>
+                </div>
+                
+                <div class="editor-controls">
+                    <button class="btn btn-secondary" onclick="playSelection()">🔊 播放选中片段</button>
+                    <button class="btn btn-secondary" onclick="resetSelection()">🔄 重置选择</button>
+                    <button class="btn" id="trimBtn" onclick="trimAudio()" disabled>
+                        <span class="btn-text">✂️ 剪辑音频</span>
+                        <span class="loading" style="display: none;"></span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="trim-result" id="resultSection" style="display: none;">
+                <h2>剪辑结果</h2>
+                <div class="result-info">
+                    <div class="success-message">
+                        <div class="success-icon">✅</div>
+                        <h3>剪辑完成！</h3>
+                        <p id="resultMessage">您的音频已成功剪辑</p>
+                    </div>
+                    
+                    <div class="download-section">
+                        <audio controls id="resultPlayer" style="width: 100%; margin-bottom: 15px;">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                        <button class="btn" id="downloadBtn" onclick="downloadResult()">
+                            📥 下载剪辑后的文件
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+</body>
+</html>
